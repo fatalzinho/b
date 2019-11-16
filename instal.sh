@@ -27,52 +27,52 @@ read usr_usuario
 cfdisk 
 
 mkfs.ext4 $boot -L Boot 1> /dev/null 2> /dev/stdout
-sleep 7
+sleep 1
 echo "formatando BOOT"
-sleep 7
+sleep 1
 clear 
 mkfs.ext4 $raiz -L Raiz 1> /dev/null 2> /dev/stdout
-sleep 7
+sleep 1
 echo "formatando RAIZ"
-sleep 7
+sleep 1
 clear 
 mkfs.ext4 $home -L Home  1> /dev/null 2> /dev/stdout
-sleep 7
+sleep 1
 echo "formatando HOME"
-sleep 7
+sleep 1
 clear 
 mkswap -L swap $swap && swapon $swap
-sleep 7
+sleep 1
 echo "montando SWAP"
-sleep 7
+sleep 1
 clear 
 mount $raiz /mnt 
-sleep 7
+sleep 1
 echo "montando MNT"
-sleep 7
+sleep 1
 clear 
 mkdir /mnt/boot && mount $boot /mnt/boot
-sleep 7
+sleep 1
 echo "montando BOOT"
-sleep 7
+sleep 1
 clear 
 mkdir /mnt/home && mount $home /mnt/home 
-sleep 7
+sleep 1
 echo "montando HOME"
-sleep 7
+sleep 1
 clear 
 sed -i '/^#\[multilib\]/{s/^#//;n;s/^#//;n;s/^#//}' /etc/pacman.conf 
-sleep 5
+sleep 1
 clear 
 pacstrap /mnt base base-devel linux linux-firmware nano sudo man-db dhcpcd git usbutils diffutils
-sleep 7
+sleep 1
 echo "instalando pacstrap"
-sleep 7
+sleep 1
 clear 
 genfstab -U -p /mnt >> /mnt/etc/fstab 
-sleep 30
+sleep 1
 echo "entrando chroot"
-sleep 30
+sleep 1
 clear 
 arch-chroot /mnt << EOF
 
