@@ -152,9 +152,9 @@ $usr_usuario
 EOF
 EOF
 sleep 1
-arch-chroot /mnt
+exit
 
-
-SLEEP 5
-umount /mnt/{boot,home,}
+SLEEP 1
+umount /mnt/boot
+umount /mnt/home
 reboot
