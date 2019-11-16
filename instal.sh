@@ -10,23 +10,19 @@ function espera() {
 	read -p "$1 Tecle <ENTER> para continuar..." a;
 	unset a;
 }
-url="https://www.archlinux.org/mirrorlist/?country=BR&use_mirror_status=on"
+echo "Setting up pacman"
+cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bkp
+sed "s/^Ser/#Ser/" /etc/pacman.d/mirrorlist > /tmp/mirrors
+sed '/Brazil/{n;s/^#//}' /tmp/mirrors > /etc/pacman.d/mirrorlist
 
-  tmpfile=$(mktemp --suffix=-mirrorlist)
+if [ "$(uname -m)" = "x86_64" ]
+then
+        cp /etc/pacman.conf /etc/pacman.conf.bkp
+        # Adds multilib repository
+        sed '/^#\[multilib\]/{s/^#//;n;s/^#//;n;s/^#//}' /etc/pacman.conf > /tmp/pacman
+        mv /tmp/pacman /etc/pacman.conf
 
-  # Get latest mirror list and save to tmpfile
-  curl -so ${tmpfile} ${url}
-  sed -i 's/^#Server/Server/g' ${tmpfile}
-
-  # Backup and replace current mirrorlist file (if new file is non-zero)
-  if [[ -s ${tmpfile} ]]; then
-   { echo " Backing up the original mirrorlist..."
-     mv -i /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.orig; } &&
-   { echo " Rotating the new list into place..."
-     mv -i ${tmpfile} /etc/pacman.d/mirrorlist; }
-  else
-    echo " Unable to update, could not download list."
-  fi
+fi
 #nome root
 echo "NOME ROOT"
 read nome
@@ -92,23 +88,19 @@ echo "entrando chroot"
 sleep 1
 clear 
 arch-chroot /mnt << EOF
-url="https://www.archlinux.org/mirrorlist/?country=BR&use_mirror_status=on"
+echo "Setting up pacman"
+cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bkp
+sed "s/^Ser/#Ser/" /etc/pacman.d/mirrorlist > /tmp/mirrors
+sed '/Brazil/{n;s/^#//}' /tmp/mirrors > /etc/pacman.d/mirrorlist
 
-  tmpfile=$(mktemp --suffix=-mirrorlist)
+if [ "$(uname -m)" = "x86_64" ]
+then
+        cp /etc/pacman.conf /etc/pacman.conf.bkp
+        # Adds multilib repository
+        sed '/^#\[multilib\]/{s/^#//;n;s/^#//;n;s/^#//}' /etc/pacman.conf > /tmp/pacman
+        mv /tmp/pacman /etc/pacman.conf
 
-  # Get latest mirror list and save to tmpfile
-  curl -so ${tmpfile} ${url}
-  sed -i 's/^#Server/Server/g' ${tmpfile}
-
-  # Backup and replace current mirrorlist file (if new file is non-zero)
-  if [[ -s ${tmpfile} ]]; then
-   { echo " Backing up the original mirrorlist..."
-     mv -i /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.orig; } &&
-   { echo " Rotating the new list into place..."
-     mv -i ${tmpfile} /etc/pacman.d/mirrorlist; }
-  else
-    echo " Unable to update, could not download list."
-  fi
+fi
 # Sets hostname
 echo $nome > /etc/hostname
 
@@ -139,18 +131,18 @@ pacman -S os-prober --noconfirm
 os-prober
 grub-mkconfig -o /boot/grub/grub.cfg
 
-#echo -e $root_senha"\n"$root_senha | passwd
-passwd << EOF
-$root_senha
-$root_senha
-EOF
+echo -e $root_senha"\n"$root_senha | passwd
+#passwd << EOF
+#$root_senha
+#$root_senha
+#EOF
 
 useradd -m -G audio,dbus,lp,network,optical,power,storage,users,video,wheel -s /bin/bash $usuario
-passwd "$usuario" << EOF
-$usr_usuario
-$usr_usuario
-EOF
-exit
+echo -e $usr_usuario"\n"$usr_usuario | passwd $usuario
+#passwd "$usuario" << EOF
+#$usr_usuario
+#$usr_usuario
+#EOF
 EOF
 sleep 1
 umount /mnt/boot
