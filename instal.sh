@@ -96,7 +96,7 @@ echo America/Sao_Paulo > /etc/timezone
 hwclock --systohc --utc
 
 mkinitcpio -p linux
-pacman -S grub-bios
+pacman -S grub
 grub-install --target=i386-pc --recheck --debug /dev/sda
 mkdir -p /boot/grub/locale
 cp /usr/share/locale/en\@quot/LC_MESSAGES/grub.mo /boot/grub/locale/en.mo
