@@ -6,5 +6,6 @@ cd /nvidia-340xx/
 makepkg -si
 
 sudo pacman -S lxde lxdm
-systemctl enable lxdm.service
+sudo systemctl enable lxdm.service
 
+sudo echo  "exec startlxde" >> ~/.xinitrc
