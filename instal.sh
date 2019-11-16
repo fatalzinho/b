@@ -110,12 +110,12 @@ url="https://www.archlinux.org/mirrorlist/?country=BR&use_mirror_status=on"
     echo " Unable to update, could not download list."
   fi
 # Sets hostname
-echo $nome > /etc/hostname;
+echo $nome > /etc/hostname
 
 sed -i 's/#\('pt_BR.UTF-8'\)/\1/' /etc/locale.gen
 sed -i 's/#\('pt_BR'\)/\1/' /etc/locale.gen
 
-systemctl enable dhcpcd.service;
+systemctl enable dhcpcd.service
 
 echo -e "KEYMAP=br-abnt2\nFONT=lat0-16\nFONT_MAP=" >> /etc/vconsole.conf
 sleep 1
@@ -128,16 +128,16 @@ ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
 echo America/Sao_Paulo > /etc/timezone
 hwclock --systohc --utc
 
-mkinitcpio -p linux;
-pacman -S grub;
-grub-install --target=i386-pc --recheck --debug /dev/sda;
-mkdir -p /boot/grub/locale;
-cp /usr/share/locale/en\@quot/LC_MESSAGES/grub.mo /boot/grub/locale/en.mo;
-sudo pacman -S gvfs-mtp ntfs-3g
+mkinitcpio -p linux
+pacman -S grub --noconfirm
+grub-install --target=i386-pc --recheck --debug /dev/sda
+mkdir -p /boot/grub/locale
+cp /usr/share/locale/en\@quot/LC_MESSAGES/grub.mo /boot/grub/locale/en.mo
+sudo pacman -S gvfs-mtp ntfs-3g --noconfirm
 
-pacman -S os-prober;
-os-prober;
-grub-mkconfig -o /boot/grub/grub.cfg;
+pacman -S os-prober --noconfirm
+os-prober
+grub-mkconfig -o /boot/grub/grub.cfg
 
 #echo -e $root_senha"\n"$root_senha | passwd
 passwd << EOF
@@ -145,16 +145,14 @@ $root_senha
 $root_senha
 EOF
 
-useradd -m -G audio,dbus,lp,network,optical,power,storage,users,video,wheel -s /bin/bash $nome;
+useradd -m -G audio,dbus,lp,network,optical,power,storage,users,video,wheel -s /bin/bash $usuario
 passwd "$usuario" << EOF
 $usr_usuario
 $usr_usuario
 EOF
+exit
 EOF
 sleep 1
-exit
-
-SLEEP 1
 umount /mnt/boot
 umount /mnt/home
 reboot
