@@ -131,6 +131,8 @@ pacman -S os-prober --noconfirm
 os-prober
 grub-mkconfig -o /boot/grub/grub.cfg
 
+sed -i '/%wheel ALL=(ALL) ALL/s/^#//' /etc/sudoers
+
 echo -e $root_senha"\n"$root_senha | passwd
 #passwd << EOF
 #$root_senha
