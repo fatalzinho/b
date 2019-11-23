@@ -77,7 +77,7 @@ clear
 sed -i '/^#\[multilib\]/{s/^#//;n;s/^#//;n;s/^#//}' /etc/pacman.conf 
 sleep 1
 clear 
-pacstrap /mnt base base-devel linux linux-firmware nano sudo man-db dhcpcd git usbutils diffutils
+pacstrap /mnt base base-devel linux intel-ucode nano sudo man-db dhcpcd git usbutils diffutils
 sleep 1
 echo "instalando pacstrap"
 sleep 1
