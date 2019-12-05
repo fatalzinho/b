@@ -1,6 +1,6 @@
 #!/bin/bash
 
-boot=/dev/sda1
+raiz=/dev/sda1
 pos_instalacao="sim";
 
 function espera() {
