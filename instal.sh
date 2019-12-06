@@ -35,10 +35,45 @@ read usr_usuario
 
 
 cfdisk 
+cfdisk 
 
+mkfs.ext4 $boot -L Boot 1> /dev/null 2> /dev/stdout
+sleep 1
+echo "formatando BOOT"
+sleep 1
+clear 
+mkfs.ext4 $raiz -L Raiz 1> /dev/null 2> /dev/stdout
+sleep 1
+echo "formatando RAIZ"
+sleep 1
+clear 
+mkfs.ext4 $home -L Home  1> /dev/null 2> /dev/stdout
+sleep 1
+echo "formatando HOME"
+sleep 1
+clear 
+mkswap -L swap $swap && swapon $swap
+sleep 1
+echo "montando SWAP"
+sleep 1
+clear 
 
 mkfs.ext4 $raiz -L Raiz
 mount $raiz /mnt 
+sleep 1
+echo "montando MNT"
+sleep 1
+clear 
+mkdir /mnt/boot && mount $boot /mnt/boot
+sleep 1
+echo "montando BOOT"
+sleep 1
+clear 
+mkdir /mnt/home && mount $home /mnt/home 
+sleep 1
+echo "montando HOME"
+sleep 1
+clear 
 mkdir /mnt/boot
 mkdir /mnt/home
 
