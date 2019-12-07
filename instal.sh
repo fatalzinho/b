@@ -75,8 +75,6 @@ sleep 1
 echo "montando HOME"
 sleep 1
 clear 
-mkdir /mnt/boot
-mkdir /mnt/home
 
 sed -i '/^#\[multilib\]/{s/^#//;n;s/^#//;n;s/^#//}' /etc/pacman.conf 
 sleep 1
