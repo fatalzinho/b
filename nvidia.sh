@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #Pedacinho do meu script pra ajudar com a NVIDIA: 😎
 
 #Só precisa saber se sua nvidia usa o driver "nvidia" ou "nvidia-390xx", e precisa obviamente ter o base-devel e linux-header (para cada kernel que usar) instalados:
