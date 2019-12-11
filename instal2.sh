@@ -20,12 +20,13 @@ sudo pacman -S ttf-dejavu ttf-liberation noto-fonts --noconfirm
 fc-cache -vf
 sudo timedatectl set-ntp true
 sudo pacman -S file-roller unrar unzip 
-sudo git clone https://aur.archlinux.org/mugshot.git
-sudo chmod 777 mugshot/
+
+cd /tmp/
+git clone https://aur.archlinux.org/mugshot.git
 cd mugshot
 makepkg -si --noconfirm
 
-sudo git clone https://aur.archlinux.org/google-chrome.git
-sudo chmod 777 google-chrome/
+cd /tmp/
+git clone https://aur.archlinux.org/google-chrome.git
 cd google-chrome
 makepkg -si --noconfirm
