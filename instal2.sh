@@ -19,7 +19,7 @@ sudo pacman -S mate-icon-theme-faenza mate-themes arc-gtk-theme xfce4-taskbar-pl
 sudo pacman -S ttf-dejavu ttf-liberation noto-fonts 
 fc-cache -vf
 sudo timedatectl set-ntp true
-sudo pacman -S file-roller unrar unzip neofetch
+sudo pacman -S  p7zip unrar tar rsync file-roller neofetch
 
 cd /tmp/
 git clone https://aur.archlinux.org/mugshot.git
