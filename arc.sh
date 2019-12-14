@@ -1,2 +1,3 @@
 #!/bin/bash
-pacman -Suy --overwrite=usr/lib/libtensorflow.so.1,usr/lib/libtensorflow_cc.so.1,usr/lib/libtensorflow_framework.so.1
+
+sudo pacman -S nvidia nvidia-utils lib32-nvidia-utils nvidia-settings vulkan-icd-loader lib32-vulkan-icd-loader
