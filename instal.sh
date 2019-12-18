@@ -93,7 +93,7 @@ clear
 sed -i '/^#\[multilib\]/{s/^#//;n;s/^#//;n;s/^#//}' /etc/pacman.conf 
 sleep 1
 clear 
-pacstrap /mnt base base-devel linux linux-firmware nano sudo man-db dhcpcd git usbutils diffutils
+pacstrap /mnt base base-devel linux-zen linux-firmware nano sudo man-db dhcpcd git usbutils diffutils gvfs-mtp ntfs-3g
 sleep 1
 echo "instalando pacstrap"
 sleep 1
@@ -104,11 +104,24 @@ echo "entrando chroot"
 sleep 1
 clear 
 arch-chroot /mnt << EOF
-echo "Setting up pacman"
-cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bkp
-sed "s/^Ser/#Ser/" /etc/pacman.d/mirrorlist > /tmp/mirrors
-sed '/Brazil/{n;s/^#//}' /tmp/mirrors > /etc/pacman.d/mirrorlist
+url="https://www.archlinux.org/mirrorlist/?country=BR&use_mirror_status=on"
 
+  tmpfile=$(mktemp --suffix=-mirrorlist)
+
+  # Get latest mirror list and save to tmpfile
+  curl -so ${tmpfile} ${url}
+  sed -i 's/^#Server/Server/g' ${tmpfile}
+
+  # Backup and replace current mirrorlist file (if new file is non-zero)
+  if [[ -s ${tmpfile} ]]; then
+   { echo " Backing up the original mirrorlist..."
+     mv -i /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bkp; } &&
+   { echo " Rotating the new list into place..."
+     mv -i ${tmpfile} /etc/pacman.d/mirrorlist; }
+  else
+    echo " Unable to update, could not download list."
+  fi
+  
 if [ "$(uname -m)" = "x86_64" ]
 then
         cp /etc/pacman.conf /etc/pacman.conf.bkp
@@ -135,13 +148,18 @@ locale-gen
 ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
 echo America/Sao_Paulo > /etc/timezone
 hwclock --systohc --utc
-
+lsblk
+echo "nome da particao hd"
+part_hd1
+echo "$part_hd1 /media/Arquivos ntfs-3g ntfs-3g umask=000 0 0" >> /etc/fstab
+echo "nome da particao hd"
+part_hd2
+echo "$part_hd2 /media/Arquivos ntfs-3g ntfs-3g umask=000 0 0" >> /etc/fstab
 mkinitcpio -p linux
 pacman -S grub --noconfirm
 grub-install --target=i386-pc --recheck --debug /dev/sda
 mkdir -p /boot/grub/locale
 cp /usr/share/locale/en\@quot/LC_MESSAGES/grub.mo /boot/grub/locale/en.mo
-sudo pacman -S gvfs-mtp ntfs-3g --noconfirm
 
 pacman -S os-prober --noconfirm
 os-prober
