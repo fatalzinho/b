@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #sudo pacman -S intel-ucode
-sudo pacman -S nvidia-390xx nvidia-390xx-libgl nvidia-390xx-utils lib32-nvidia-390xx-libgl 
+sudo pacman -S nvidia-390xx-dkms nvidia-390xx-libgl nvidia-390xx-utils lib32-nvidia-390xx-libgl 
 sudo pacman -S opencl-nvidiapul nvidia-settings seaudio paprefs pavucontrol 
 sudo pacman -S pulseaudio-alsa lib32-libpulse lib32-alsa-plugins gparted
 sudo rmmod snd_pcm_oss
@@ -30,4 +30,11 @@ cd /tmp/
 git clone https://aur.archlinux.org/google-chrome.git
 cd google-chrome
 makepkg -si --noconfirm
+
+cd /tmp/
+git clone https://aur.archlinux.org/balena-etcher.git
+cd balena-etcher
+makepkg -si --noconfirm
+
+
 neofetch
