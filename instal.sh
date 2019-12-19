@@ -34,9 +34,9 @@ then
         # Adds multilib repository
         sed '/^#\[multilib\]/{s/^#//;n;s/^#//;n;s/^#//}' /etc/pacman.conf > /tmp/pacman
         mv /tmp/pacman /etc/pacman.conf
-
-chmod 444 /etc/pacman.d/mirrorlist
 fi
+chmod 444 /etc/pacman.d/mirrorlist
+
 #nome root
 echo "NOME ROOT"
 read nome
@@ -53,17 +53,17 @@ read usr_usuario
 
 cfdisk 
 
-mkfs.ext4 $boot -L Boot < y
+mkfs.ext4 $boot -L Boot
 sleep 1
 echo "formatando BOOT"
 sleep 1
 clear 
-mkfs.ext4 $raiz -L Raiz < y
+mkfs.ext4 $raiz -L Raiz 
 sleep 1
 echo "formatando RAIZ"
 sleep 1
 clear 
-mkfs.ext4 $home -L Home  < y
+mkfs.ext4 $home -L Home  
 sleep 1
 echo "formatando HOME"
 sleep 1
