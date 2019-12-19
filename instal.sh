@@ -35,6 +35,7 @@ then
         sed '/^#\[multilib\]/{s/^#//;n;s/^#//;n;s/^#//}' /etc/pacman.conf > /tmp/pacman
         mv /tmp/pacman /etc/pacman.conf
 
+chmod 444 /etc/pacman.d/mirrorlist
 fi
 #nome root
 echo "NOME ROOT"
@@ -72,8 +73,6 @@ sleep 1
 echo "montando SWAP"
 sleep 1
 clear 
-
-mkfs.ext4 $raiz -L Raiz
 mount $raiz /mnt 
 sleep 1
 echo "montando MNT"
@@ -121,7 +120,9 @@ url="https://www.archlinux.org/mirrorlist/?country=BR&use_mirror_status=on"
   else
     echo " Unable to update, could not download list."
   fi
-  
+ 
+chmod 444 /etc/pacman.d/mirrorlist
+ 
 if [ "$(uname -m)" = "x86_64" ]
 then
         cp /etc/pacman.conf /etc/pacman.conf.bkp
