@@ -1,8 +1,8 @@
 #!/bin/bash
-boot=/dev/sda1
-raiz=/dev/sda2
-home=/dev/sda3
-swap=/dev/sda4
+boot=/dev/sda5
+raiz=/dev/sda6
+home=/dev/sda7
+swap=/dev/sda8
 pos_instalacao="sim";
 
 function espera() {
