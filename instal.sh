@@ -53,17 +53,17 @@ read usr_usuario
 
 cfdisk 
 
-mkfs.ext4 $boot -L Boot 
+mkfs.ext4 $boot -L Boot < y
 sleep 1
 echo "formatando BOOT"
 sleep 1
 clear 
-mkfs.ext4 $raiz -L Raiz 
+mkfs.ext4 $raiz -L Raiz < y
 sleep 1
 echo "formatando RAIZ"
 sleep 1
 clear 
-mkfs.ext4 $home -L Home  
+mkfs.ext4 $home -L Home  < y
 sleep 1
 echo "formatando HOME"
 sleep 1
@@ -92,7 +92,7 @@ clear
 sed -i '/^#\[multilib\]/{s/^#//;n;s/^#//;n;s/^#//}' /etc/pacman.conf 
 sleep 1
 clear 
-pacstrap /mnt base base-devel linux-zen linux-firmware nano sudo man-db dhcpcd git usbutils diffutils gvfs-mtp ntfs-3g
+pacstrap /mnt base base-devel linux-zen linux-zen-headers linux-firmware nano sudo man-db dhcpcd git usbutils diffutils gvfs-mtp ntfs-3g
 sleep 1
 echo "instalando pacstrap"
 sleep 1
