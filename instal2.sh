@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#sudo pacman -S intel-ucode
+sudo pacman -S linux-zen-headers
 sudo pacman -S nvidia-390xx-dkms nvidia-390xx-libgl nvidia-390xx-utils lib32-nvidia-390xx-libgl 
 sudo pacman -S opencl-nvidiapul nvidia-settings seaudio paprefs pavucontrol 
 sudo pacman -S pulseaudio-alsa lib32-libpulse lib32-alsa-plugins gparted
