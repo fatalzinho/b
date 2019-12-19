@@ -36,7 +36,7 @@ then
         mv /tmp/pacman /etc/pacman.conf
 fi
 chmod 444 /etc/pacman.d/mirrorlist
-
+pacman -Syy
 #nome root
 echo "NOME ROOT"
 read nome
@@ -131,6 +131,7 @@ then
         mv /tmp/pacman /etc/pacman.conf
 
 fi
+pacman -Syy
 # Sets hostname
 echo $nome > /etc/hostname
 
