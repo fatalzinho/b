@@ -156,7 +156,7 @@ locale-gen
 ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
 echo America/Sao_Paulo > /etc/timezone
 hwclock --systohc --utc
-mkinitcpio -p linux
+mkinitcpio -p linux-zen
 pacman -S grub --noconfirm
 grub-install --target=i386-pc --recheck --debug /dev/sda
 mkdir -p /boot/grub/locale
