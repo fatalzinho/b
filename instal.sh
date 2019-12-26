@@ -150,13 +150,6 @@ locale-gen
 ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
 echo America/Sao_Paulo > /etc/timezone
 hwclock --systohc --utc
-lsblk
-echo "nome da particao hd"
-part_hd1
-echo "$part_hd1 /media/Arquivos ntfs-3g ntfs-3g umask=000 0 0" >> /etc/fstab
-echo "nome da particao hd"
-part_hd2
-echo "$part_hd2 /media/Arquivos ntfs-3g ntfs-3g umask=000 0 0" >> /etc/fstab
 mkinitcpio -p linux
 pacman -S grub --noconfirm
 grub-install --target=i386-pc --recheck --debug /dev/sda
