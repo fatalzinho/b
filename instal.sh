@@ -53,17 +53,23 @@ read usr_usuario
 
 cfdisk 
 
-mkfs.ext4 $boot -L Boot
+mkfs.ext4 $boot -L Boot << EOF
+y
+EOF
 sleep 1
 echo "formatando BOOT"
 sleep 1
 clear 
-mkfs.ext4 $raiz -L Raiz 
+mkfs.ext4 $raiz -L Raiz << EOF
+y
+EOF
 sleep 1
 echo "formatando RAIZ"
 sleep 1
 clear 
-mkfs.ext4 $home -L Home  
+mkfs.ext4 $home -L Home  << EOF
+y
+EOF
 sleep 1
 echo "formatando HOME"
 sleep 1
