@@ -161,7 +161,7 @@ os-prober
 grub-mkconfig -o /boot/grub/grub.cfg
 
 sed -i '/%wheel ALL=(ALL) ALL/s/^#//' /etc/sudoers
-
+echo "Defaults env_reset,pwfeedback" >> /etc/sudoers
 git clone https://github.com/fatalzinho/b
 cd b
 chmod +x instal2.sh
