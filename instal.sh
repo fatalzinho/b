@@ -3,7 +3,7 @@ boot=/dev/sda5
 raiz=/dev/sda6
 home=/dev/sda7
 swap=/dev/sda8
-pos_instalacao="sim";
+
 
 function espera() {
 	read -p "$1 Tecle <ENTER> para continuar..." a;
