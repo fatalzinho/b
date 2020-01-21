@@ -121,7 +121,7 @@ url="https://www.archlinux.org/mirrorlist/?country=BR&use_mirror_status=on"
     echo " Unable to update, could not download list."
   fi
  
-chmod 444 /etc/pacman.d/mirrorlist
+chmod 644 /etc/pacman.d/mirrorlist
  
 if [ "$(uname -m)" = "x86_64" ]
 then
