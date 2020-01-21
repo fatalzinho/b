@@ -35,7 +35,7 @@ then
         sed '/^#\[multilib\]/{s/^#//;n;s/^#//;n;s/^#//}' /etc/pacman.conf > /tmp/pacman
         mv /tmp/pacman /etc/pacman.conf
 fi
-chmod 444 /etc/pacman.d/mirrorlist
+chmod 644 /etc/pacman.d/mirrorlist
 pacman -Syy
 #nome root
 echo "NOME ROOT"
