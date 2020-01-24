@@ -10,23 +10,7 @@ pulseaudio-alsa lib32-libpulse lib32-alsa-plugins"
 
 sudo pacman -S $pkg --noconfirm
 
-pkglxde="gpicview-gtk3
-lxappearance-gtk3
-lxappearance-obconf-gtk3
-lxde-common
-lxde-icon-theme
-lxdm
-lxhotkey-gtk3
-lxinput-gtk3
-lxlauncher-gtk3
-lxmusic-gtk3
-lxpanel-gtk3
-lxrandr-gtk3
-lxsession-gtk3
-lxtask-gtk3
-lxterminal
-openbox
-pcmanfm-gtk3 
+pkglxde="lxde-gtk3 
 xdg-user-dirs 
 thunar 
 gparted 
@@ -67,3 +51,4 @@ git clone https://aur.archlinux.org/mugshot.git
 cd mugshot
 makepkg -si --noconfirm
 
+reboot
