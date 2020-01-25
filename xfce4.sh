@@ -18,6 +18,7 @@ xdg-user-dirs
 thunar 
 gparted 
 lxdm 
+sddm 
 firefox 
 firefox-i18n-pt-br 
 ttf-dejavu ttf-liberation noto-fonts 
@@ -29,7 +30,8 @@ telegram-desktop
 neofetch"
 sudo pacman -S $pkgxfce4 --noconfirm
 sudo echo  "exec startxfce" >> ~/.xinitrc
-sudo systemctl enable lxdm.service
+sudo systemctl enable sddm.service
+
 sudo xdg-user-dirs-update
 
 # Instalação de TEMAS
