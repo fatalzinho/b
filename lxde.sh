@@ -24,6 +24,7 @@ p7zip unrar tar rsync
 file-roller 
 playonlinux 
 telegram-desktop 
+gnome-disk-utility 
 neofetch"
 sudo pacman -S $pkglxde --noconfirm
 sudo systemctl enable lxdm.service
