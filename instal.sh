@@ -1,8 +1,7 @@
 #!/bin/bash
-boot=/dev/sda5
-raiz=/dev/sda6
-home=/dev/sda7
-swap=/dev/sda8
+raiz=/dev/sda2
+
+swap=/dev/sda1
 
 
 function espera() {
@@ -53,21 +52,12 @@ read usr_usuario
 
 cfdisk 
 
-mkfs.ext4 $boot -L Boot
-sleep 1
-echo "formatando BOOT"
 sleep 1
 clear 
 mkfs.ext4 $raiz -L Raiz
 sleep 1
 echo "formatando RAIZ"
 sleep 1
-clear 
-mkfs.ext4 $home -L Home
-sleep 1
-echo "formatando HOME"
-sleep 1
-clear 
 mkswap -L swap $swap && swapon $swap
 sleep 1
 echo "montando SWAP"
@@ -78,12 +68,12 @@ sleep 1
 echo "montando MNT"
 sleep 1
 clear 
-mkdir /mnt/boot && mount $boot /mnt/boot
+mkdir /mnt/boot && mount $raiz /mnt/boot
 sleep 1
 echo "montando BOOT"
 sleep 1
 clear 
-mkdir /mnt/home && mount $home /mnt/home 
+mkdir /mnt/home && mount $raiz /mnt/home 
 sleep 1
 echo "montando HOME"
 sleep 1
