@@ -3,6 +3,29 @@ raiz=/dev/sda2
 
 swap=/dev/sda1
 
+pkgxfce4="xfce4 
+xfce4-goodies
+xdg-user-dirs 
+thunar 
+gparted 
+sddm
+gedit 
+gnome-disk-utility 
+firefox 
+firefox-i18n-pt-br 
+ttf-dejavu ttf-liberation noto-fonts 
+p7zip unrar unzip tar rsync 
+file-roller 
+playonlinux 
+telegram-desktop 
+neofetch"
+
+pkdtheme="gtk-theme-switch2 
+mate-icon-theme 
+materia-gtk-theme 
+mate-icon-theme-faenza 
+mate-themes 
+arc-gtk-theme" 
 
 function espera() {
 	read -p "$1 Tecle <ENTER> para continuar..." a;
@@ -98,32 +121,32 @@ arch-chroot /mnt << EOF
  # Adds multilib repository
   sed '/^#\[multilib\]/{s/^#//;n;s/^#//;n;s/^#//}' /etc/pacman.conf > /tmp/pacman
   mv /tmp/pacman /etc/pacman.conf
-espera
+espera()
 
 pacman -Syy
 # Sets hostname
 echo $nome > /etc/hostname
-espera
+espera()
 sed -i 's/#\('pt_BR.UTF-8'\)/\1/' /etc/locale.gen
 sed -i 's/#\('pt_BR'\)/\1/' /etc/locale.gen
-espera
+espera()
 systemctl enable dhcpcd.service
-espera
+espera()
 echo -e "KEYMAP=br-abnt2\nFONT=lat0-16\nFONT_MAP=" >> /etc/vconsole.conf
-espera
+espera()
 echo  "LANG=pt_BR.UTF-8" >> /etc/locale.conf
 loadkeys /usr/share/kbd/keymaps/i386/qwerty/br-abnt2.map.gz
-espera
+espera()
 locale-gen
-espera
+espera()
 ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
 echo America/Sao_Paulo > /etc/timezone
 hwclock --systohc --utc
-espera
+espera()
 mkinitcpio -p linux-zen
-espera
+espera()
 pacman -S grub --noconfirm
-espera
+espera()
 grub-install --target=i386-pc --recheck --debug /dev/sda
 mkdir -p /boot/grub/locale
 cp /usr/share/locale/en\@quot/LC_MESSAGES/grub.mo /boot/grub/locale/en.mo
@@ -146,36 +169,13 @@ pulseaudio  pavucontrol pulseaudio-alsa"
 pacman -S $pkg --noconfirm
 rmmod snd_pcm_oss
 
-# Instalação DESKTOP e APLICATIVOS
-pkgxfce4="xfce4 
-xfce4-goodies
-xdg-user-dirs 
-thunar 
-gparted 
-sddm
-gedit 
-gnome-disk-utility 
-firefox 
-firefox-i18n-pt-br 
-ttf-dejavu ttf-liberation noto-fonts 
-p7zip unrar unzip tar rsync 
-file-roller 
-playonlinux 
-telegram-desktop 
-neofetch"
 pacman -S $pkgxfce4 --noconfirm
 echo  "exec startxfce" >> ~/.xinitrc
 systemctl enable sddm.service
 
 xdg-user-dirs-update
 
-# Instalação de TEMAS
-pkdtheme="gtk-theme-switch2 
-mate-icon-theme 
-materia-gtk-theme 
-mate-icon-theme-faenza 
-mate-themes 
-arc-gtk-theme" 
+
 pacman -S $pkdtheme --noconfirm
 
 # OUTROS
