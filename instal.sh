@@ -8,24 +8,25 @@ function espera() {
 	read -p "$1 Tecle <ENTER> para continuar..." a;
 	unset a;
 }
-url="https://www.archlinux.org/mirrorlist/?country=BR&use_mirror_status=on"
+#url="https://www.archlinux.org/mirrorlist/?country=BR&use_mirror_status=on"
 
-  tmpfile=$(mktemp --suffix=-mirrorlist)
+ # tmpfile=$(mktemp --suffix=-mirrorlist)
 
   # Get latest mirror list and save to tmpfile
-  curl -so ${tmpfile} ${url}
-  sed -i 's/^#Server/Server/g' ${tmpfile}
+  #curl -so ${tmpfile} ${url}
+ # sed -i 's/^#Server/Server/g' ${tmpfile}
 
   # Backup and replace current mirrorlist file (if new file is non-zero)
-  if [[ -s ${tmpfile} ]]; then
-   { echo " Backing up the original mirrorlist..."
-     mv -i /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bkp; } &&
-   { echo " Rotating the new list into place..."
-     mv -i ${tmpfile} /etc/pacman.d/mirrorlist; }
-  else
-    echo " Unable to update, could not download list."
-  fi
+ # if [[ -s ${tmpfile} ]]; then
+ #  { echo " Backing up the original mirrorlist..."
+ #    mv -i /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bkp; } &&
+ #  { echo " Rotating the new list into place..."
+  #   mv -i ${tmpfile} /etc/pacman.d/mirrorlist; }
+ # else
+ #   echo " Unable to update, could not download list."
+#  fi
 
+reflector --verbose --latest 4 --sort rate --country Brazil --save /etc/pacman.d/mirrorlist
 
 if [ "$(uname -m)" = "x86_64" ]
 then
@@ -34,7 +35,7 @@ then
         sed '/^#\[multilib\]/{s/^#//;n;s/^#//;n;s/^#//}' /etc/pacman.conf > /tmp/pacman
         mv /tmp/pacman /etc/pacman.conf
 fi
-chmod 644 /etc/pacman.d/mirrorlist
+#chmod 644 /etc/pacman.d/mirrorlist
 pacman -Syy
 #nome root
 echo "NOME ROOT"
