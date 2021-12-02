@@ -98,28 +98,32 @@ arch-chroot /mnt << EOF
  # Adds multilib repository
   sed '/^#\[multilib\]/{s/^#//;n;s/^#//;n;s/^#//}' /etc/pacman.conf > /tmp/pacman
   mv /tmp/pacman /etc/pacman.conf
+espera
 
 pacman -Syy
 # Sets hostname
 echo $nome > /etc/hostname
-
+espera
 sed -i 's/#\('pt_BR.UTF-8'\)/\1/' /etc/locale.gen
 sed -i 's/#\('pt_BR'\)/\1/' /etc/locale.gen
-
+espera
 systemctl enable dhcpcd.service
-
+espera
 echo -e "KEYMAP=br-abnt2\nFONT=lat0-16\nFONT_MAP=" >> /etc/vconsole.conf
-sleep 1
+espera
 echo  "LANG=pt_BR.UTF-8" >> /etc/locale.conf
 loadkeys /usr/share/kbd/keymaps/i386/qwerty/br-abnt2.map.gz
-
+espera
 locale-gen
-
+espera
 ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
 echo America/Sao_Paulo > /etc/timezone
 hwclock --systohc --utc
+espera
 mkinitcpio -p linux-zen
+espera
 pacman -S grub --noconfirm
+espera
 grub-install --target=i386-pc --recheck --debug /dev/sda
 mkdir -p /boot/grub/locale
 cp /usr/share/locale/en\@quot/LC_MESSAGES/grub.mo /boot/grub/locale/en.mo
