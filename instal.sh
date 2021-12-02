@@ -93,34 +93,11 @@ echo "entrando chroot"
 sleep 1
 clear 
 arch-chroot /mnt << EOF
-url="https://www.archlinux.org/mirrorlist/?country=BR&use_mirror_status=on"
 
-  tmpfile=$(mktemp --suffix=-mirrorlist)
+ # Adds multilib repository
+  sed '/^#\[multilib\]/{s/^#//;n;s/^#//;n;s/^#//}' /etc/pacman.conf > /tmp/pacman
+  mv /tmp/pacman /etc/pacman.conf
 
-  # Get latest mirror list and save to tmpfile
-  curl -so ${tmpfile} ${url}
-  sed -i 's/^#Server/Server/g' ${tmpfile}
-
-  # Backup and replace current mirrorlist file (if new file is non-zero)
-  if [[ -s ${tmpfile} ]]; then
-   { echo " Backing up the original mirrorlist..."
-     mv -i /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bkp; } &&
-   { echo " Rotating the new list into place..."
-     mv -i ${tmpfile} /etc/pacman.d/mirrorlist; }
-  else
-    echo " Unable to update, could not download list."
-  fi
- 
-chmod 644 /etc/pacman.d/mirrorlist
- 
-if [ "$(uname -m)" = "x86_64" ]
-then
-        cp /etc/pacman.conf /etc/pacman.conf.bkp
-        # Adds multilib repository
-        sed '/^#\[multilib\]/{s/^#//;n;s/^#//;n;s/^#//}' /etc/pacman.conf > /tmp/pacman
-        mv /tmp/pacman /etc/pacman.conf
-
-fi
 pacman -Syy
 # Sets hostname
 echo $nome > /etc/hostname
@@ -152,9 +129,57 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 sed -i '/%wheel ALL=(ALL) ALL/s/^#//' /etc/sudoers
 echo "Defaults env_reset,pwfeedback" >> /etc/sudoers
-git clone https://github.com/fatalzinho/b
-cd b
-chmod +x instal2.sh
+#git clone https://github.com/fatalzinho/b
+#cd b
+#chmod +x instal2.sh
+
+sudo timedatectl set-ntp true
+
+# Instalação driver de VIDEO e SOM
+pkg="nvidia-390xx-dkms nvidia-390xx-utils nvidia-settings 
+pulseaudio  pavucontrol pulseaudio-alsa" 
+pacman -S $pkg --noconfirm
+rmmod snd_pcm_oss
+
+# Instalação DESKTOP e APLICATIVOS
+pkgxfce4="xfce4 
+xfce4-goodies
+xdg-user-dirs 
+thunar 
+gparted 
+sddm
+gedit 
+gnome-disk-utility 
+firefox 
+firefox-i18n-pt-br 
+ttf-dejavu ttf-liberation noto-fonts 
+p7zip unrar unzip tar rsync 
+file-roller 
+playonlinux 
+telegram-desktop 
+neofetch"
+pacman -S $pkgxfce4 --noconfirm
+echo  "exec startxfce" >> ~/.xinitrc
+systemctl enable sddm.service
+
+xdg-user-dirs-update
+
+# Instalação de TEMAS
+pkdtheme="gtk-theme-switch2 
+mate-icon-theme 
+materia-gtk-theme 
+mate-icon-theme-faenza 
+mate-themes 
+arc-gtk-theme" 
+pacman -S $pkdtheme --noconfirm
+
+# OUTROS
+cd /tmp/
+git clone https://aur.archlinux.org/mugshot.git
+cd mugshot
+makepkg -si --noconfirm
+
+
 
 echo -e $root_senha"\n"$root_senha | passwd
 #passwd << EOF
