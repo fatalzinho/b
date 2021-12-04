@@ -49,7 +49,7 @@ function espera() {
  #   echo " Unable to update, could not download list."
 #  fi
 
-reflector --verbose --latest 4 --sort rate --country Brazil --save /etc/pacman.d/mirrorlist
+#reflector --verbose --latest 4 --sort rate --country Brazil --save /etc/pacman.d/mirrorlist
 
 if [ "$(uname -m)" = "x86_64" ]
 then
@@ -106,7 +106,7 @@ clear
 sed -i '/^#\[multilib\]/{s/^#//;n;s/^#//;n;s/^#//}' /etc/pacman.conf 
 sleep 1
 clear 
-pacstrap /mnt base base-devel linux-zen linux-zen-headers linux-firmware nano sudo man-db dhcpcd git usbutils diffutils gvfs-mtp ntfs-3g
+pacstrap /mnt base base-devel linux linux-headers linux-firmware nano sudo man-db dhcpcd git usbutils diffutils gvfs-mtp ntfs-3g
 sleep 1
 echo "instalando pacstrap"
 sleep 1
@@ -126,27 +126,27 @@ sleep 10
 pacman -Syy
 # Sets hostname
 echo $nome > /etc/hostname
-sleep 10
+sleep 1
 sed -i 's/#\('pt_BR.UTF-8'\)/\1/' /etc/locale.gen
 sed -i 's/#\('pt_BR'\)/\1/' /etc/locale.gen
-sleep 10
+sleep 1
 systemctl enable dhcpcd.service
-sleep 10
+sleep 1
 echo -e "KEYMAP=br-abnt2\nFONT=lat0-16\nFONT_MAP=" >> /etc/vconsole.conf
-sleep 10
+sleep 1
 echo  "LANG=pt_BR.UTF-8" >> /etc/locale.conf
 loadkeys /usr/share/kbd/keymaps/i386/qwerty/br-abnt2.map.gz
-sleep 10
+sleep 1
 locale-gen
-sleep 10
+sleep 1
 ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
 echo America/Sao_Paulo > /etc/timezone
 hwclock --systohc --utc
-sleep 10
-mkinitcpio -p linux-zen
-sleep 10
+sleep 1
+mkinitcpio -p linux
+sleep 1
 pacman -S grub --noconfirm
-sleep 10
+sleep 1
 grub-install --target=i386-pc --recheck --debug /dev/sda
 mkdir -p /boot/grub/locale
 cp /usr/share/locale/en\@quot/LC_MESSAGES/grub.mo /boot/grub/locale/en.mo
@@ -162,27 +162,6 @@ echo "Defaults env_reset,pwfeedback" >> /etc/sudoers
 #chmod +x instal2.sh
 
 sudo timedatectl set-ntp true
-
-# Instalação driver de VIDEO e SOM
-pkg="nvidia-390xx-dkms nvidia-390xx-utils nvidia-settings 
-pulseaudio  pavucontrol pulseaudio-alsa" 
-pacman -S $pkg --noconfirm
-rmmod snd_pcm_oss
-
-pacman -S $pkgxfce4 --noconfirm
-echo  "exec startxfce" >> ~/.xinitrc
-systemctl enable sddm.service
-
-xdg-user-dirs-update
-
-
-pacman -S $pkdtheme --noconfirm
-
-# OUTROS
-cd /tmp/
-git clone https://aur.archlinux.org/mugshot.git
-cd mugshot
-makepkg -si --noconfirm
 
 
 
