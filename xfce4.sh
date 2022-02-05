@@ -3,13 +3,6 @@ sudo pacman -Syy
 sudo timedatectl set-ntp true
 
 # Instalação driver de VIDEO e SOM
-pkg="nvidia-390xx-dkms nvidia-390xx-libgl nvidia-390xx-utils lib32-nvidia-390xx-libgl 
-opencl-nvidia nvidia-settings 
-pulseaudio paprefs pavucontrol pulseaudio-alsa lib32-libpulse lib32-alsa-plugins 
-pulseaudio-alsa lib32-libpulse lib32-alsa-plugins" 
-sudo pacman -S $pkg --noconfirm
-sudo rmmod snd_pcm_oss
-
 # Instalação DESKTOP e APLICATIVOS
 pkgxfce4="xfce4 
 xfce4-goodies
@@ -17,7 +10,7 @@ xdg-user-dirs
 thunar 
 gparted 
 lxdm 
-sddm 
+ 
 gedit 
 gnome-disk-utility 
 firefox 
@@ -30,7 +23,7 @@ telegram-desktop
 neofetch"
 sudo pacman -S $pkgxfce4 --noconfirm
 sudo echo  "exec startxfce" >> ~/.xinitrc
-sudo systemctl enable sddm.service
+#sudo systemctl enable lxdm.service
 
 sudo xdg-user-dirs-update
 
